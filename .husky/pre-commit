@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+#comment out to be able to push to github for now
+#npm exec pretty-quick --staged && npm exec concurrently npm:test npm:lint
