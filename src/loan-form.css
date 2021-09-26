@@ -1,5 +1,19 @@
 form {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
+
+.textField {
+    padding: .50% !important;
+    min-width: 30% !important;
+}
+
+.loanForm {
+    margin-top: 16px;
+}
+
+.roundButton{
+    border-radius: 24px !important;
+}
+
