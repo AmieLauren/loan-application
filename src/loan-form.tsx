@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import './loan-form.css';
 import Button from '@mui/material/Button'
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, TextField, useThemeProps } from "@mui/material";
 import * as yup from 'yup';
 import { Header } from './form-header';
 import { navigateToUrl } from "single-spa";
@@ -41,8 +41,32 @@ const validationSchema = yup.object({
     .required('Business TIN is Required'),
 });
 
+//struggling with passing form data to other app; looking into pub-sub since it was referenced on single-spa & these articles
+//https://www.linkedin.com/pulse/single-spa-authentication-state-management-using-react-rolando-niub%C3%B3/
+//Decided to take the 'easier' way out with haveing 'setLoanAppData' and 'getLoanAppData' in root config. Need to ask how it would be handled 
+//normally in a professional application.
 
-export const LoanForm = (): JSX.Element => {
+interface FormData {
+    email: string;
+    firstName: string;
+    lastName: string;
+    businessTin: string;
+    borrowerSSN: string;
+    toggle: boolean;
+}
+
+interface LoanFormProps {
+  setLoanAppData: (values: FormData) => void;
+}
+
+export const LoanForm = (props: LoanFormProps): JSX.Element => {
+
+
+  const submitForm = () => {
+    props.setLoanAppData(formik.values);
+    navigateToUrl("/success");
+  }
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -61,7 +85,6 @@ export const LoanForm = (): JSX.Element => {
 
   const [disabled, setDisabled] = useState(true);
 
-  //header giving trouble- need to get it in head not body for best practice
   return (
 
     <>
@@ -168,7 +191,7 @@ export const LoanForm = (): JSX.Element => {
           />
 
           <Button className="roundButton" variant="contained" disabled={!(formik.isValid && formik.dirty)}
-            onClick={() => navigateToUrl("/success")}>Submit (success)</Button>
+            onClick={() => submitForm()}>Submit (success)</Button>
         </form>
       </div>
 
