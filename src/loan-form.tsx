@@ -6,6 +6,9 @@ import { Checkbox, FormControlLabel, TextField, useThemeProps } from "@mui/mater
 import * as yup from 'yup';
 import { Header } from './form-header';
 import { navigateToUrl } from "single-spa";
+//
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 
 //states for the button to be greyed out before application is completely filled out. Bless the below link. 
@@ -47,12 +50,12 @@ const validationSchema = yup.object({
 //normally in a professional application.
 
 interface FormData {
-    email: string;
-    firstName: string;
-    lastName: string;
-    businessTin: string;
-    borrowerSSN: string;
-    toggle: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
+  businessTin: string;
+  borrowerSSN: string;
+  toggle: boolean;
 }
 
 interface LoanFormProps {
@@ -94,8 +97,6 @@ export const LoanForm = (props: LoanFormProps): JSX.Element => {
 
       <div className={"loanForm"}>
         <form onSubmit={formik.handleSubmit}>
-
-
 
           <TextField
             className='textField'
@@ -163,6 +164,7 @@ export const LoanForm = (props: LoanFormProps): JSX.Element => {
             <div>{formik.errors.businessTin}</div>
           )}
 
+
           <TextField
             className='textField'
             variant="filled"
@@ -179,19 +181,28 @@ export const LoanForm = (props: LoanFormProps): JSX.Element => {
             <div>{formik.errors.borrowerSSN}</div>
           )}
 
+          <div>
+            <Tooltip 
+              title={
+                  <React.Fragment>
+                  <Typography color="inherit">Agree To Terms</Typography>
+                  <em>{"Clicking this agrees to all terms and conditions*"}</em>
+                </React.Fragment>
+              }
+            >
+              <FormControlLabel control={
+                <Checkbox
+                  name="toggle"
+                  checked={formik.values.toggle}
+                  onChange={formik.handleChange}
+                  value={formik.values.toggle} />}
+                label="Select to Agree"
+              />
+            </Tooltip>
+          </div>
 
-
-          <FormControlLabel control={
-            <Checkbox
-              name="toggle"
-              checked={formik.values.toggle}
-              onChange={formik.handleChange}
-              value={formik.values.toggle} />}
-            label="Toggle Toggle"
-          />
-
-          <Button className="roundButton" variant="contained" disabled={!(formik.isValid && formik.dirty)}
-            onClick={() => submitForm()}>Submit (success)</Button>
+          <Button className="roundButton" variant="contained" id="submitButton" disabled={!(formik.isValid && formik.dirty)}
+            onClick={() => submitForm()}>Submit</Button>
         </form>
       </div>
 

@@ -16,7 +16,7 @@ export const Header = () => (
       <img className="header" src={"https://getbuilt.com/wp-content/themes/builtwp/img/blt-brandmark.svg"} alt="builtLogo"/>
         <Typography component="div" sx={{ flexGrow: 1 }}> Loan Application
         </Typography>
-        <Button className="roundButton" variant="outlined"  color="inherit">Get Built</Button>
+        <Button className="roundButton" variant="outlined" color="inherit" href="https://getbuilt.com/">Get Built</Button>
       </Toolbar>
     </AppBar>
   </Box>
